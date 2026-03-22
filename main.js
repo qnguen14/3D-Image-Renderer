@@ -1,11 +1,12 @@
 // Scene Setup
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xe0e0e0); // Slightly more grey background
+scene.background = new THREE.Color(0xfbf8f1); // Warm off-white custom background
 
 // Camera Setup
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 3;
-camera.position.y = 0; // Look straight at the notebook
+camera.position.z = 4.5;
+camera.position.y = 1; // Look slightly down at the notebook
+camera.lookAt(0, 0, 0);
 
 // Renderer Setup
 const canvasContainer = document.getElementById('canvas-container');
@@ -44,6 +45,14 @@ const notebook = new THREE.Mesh(geometry, materials);
 notebook.castShadow = true; // Object casts shadows
 notebook.receiveShadow = true; // Object can receive shadows
 scene.add(notebook);
+
+// Add warm accent grid to the floor
+const size = 60;
+const divisions = 60;
+const gridColor = new THREE.Color(0xe0b9a8); // Soft earthy orange
+const gridHelper = new THREE.GridHelper(size, divisions, gridColor, gridColor);
+gridHelper.position.y = -1; // Place exactly below the notebook
+scene.add(gridHelper);
 
 // Add OrbitControls for manual rotation
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
