@@ -42,6 +42,16 @@ const upload = multer({ storage: storage });
 // Serve static files from the root (our html, css, js)
 app.use(express.static(__dirname));
 
+// Explicit route for favicon.jpg to ensure it bypasses any potential static file mapping issues
+app.get('/favicon.jpg', (req, res) => {
+    res.sendFile(path.join(__dirname, 'favicon.jpg'));
+});
+
+// Fallback for standard favicon.ico request made automatically by browsers
+app.get('/favicon.ico', (req, res) => {
+    res.sendFile(path.join(__dirname, 'favicon.jpg'));
+});
+
 // Explicitly serve static files from local uploads, and temp uploads if on vercel
 app.use('/uploads', express.static(localUploadDir));
 if (isVercel) {
