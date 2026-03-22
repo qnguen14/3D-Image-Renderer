@@ -61,7 +61,8 @@ app.post('/upload', upload.array('images', 20), (req, res) => {
 });
 
 // Avoid port binding when deploying to Vercel (Vercel manages the HTTP server)
-if (!isVercel) {
+// Check if running on Vercel
+if (process.env.VERCEL !== '1') {
     app.listen(PORT, () => {
         console.log(`Server is running! Please open your browser to: http://localhost:${PORT}`);
     });
